@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script>
+      $(document).ready(function(){
+
+        var socket = io.connect();
+        //1 form information is emitted to the server with the event name "posting_form"
+        $('submit').click(function () {
+          socket.emit("posting_form", {reason: "this is my form post socket"});
+        })
+
+        //3 the client listens for an event called 'random_number' and when this event gets
+        // triggered shows the number in HTML
+          socket.on('updated_message', function(users){
+            console.log('my updated_message socket works');
+          })
+        //4 the client listens for an event called 'updated_message' and when this event
+        // gets triggered, displays the message somewhere in html
+          socket.on('random_number', function(){
+            console.log('My random number is'+ random);
+          })
+      })
+    </script>
+  </head>
+  <body>
+    <form action = '/results' method = 'post'>
+      Name:
+      <input type = "text" name = "name">
+      <br>
+      Dojo Location:
+      <select name = "location">
+        <option value = "San Jose">San Jose</option>
+        <option value = "Dallas">Dallas</option>
+        <option value = "Houston">Houston</option>
+        <option value = "Atlanta">Atlanta</option>
+      </select>
+      <br>
+      Favorite Language:
+      <select name = "language">
+        <option value = "Swift">Swift</option>
+        <option value = "Javascript">Javascript</option>
+        <option value = "Python">Python</option>
+        <option value = "Ruby">Ruby</option>
+      </select>
+      <br>
+      Comment:
+      <textarea name = "comments" rows "80" cols = "150">
+      </textarea>
+      <input type = "submit" value = "Submit">
+  </body>
+</html>
